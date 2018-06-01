@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/view_search_result_item" />
+            tools:listitem="@layout/view_search_item" />
 
         <ProgressBar
             android:id="@+id/progress"

@@ -21,7 +21,9 @@ class UserEntityToDomainMapper @Inject constructor() : Function<List<UserEntity>
                     name = entity.name,
                     honor = entity.honor,
                     clan = entity.clan,
-                    skills = entity.skills
+                    leaderboardPosition = entity.leaderboardPosition,
+                    skills = entity.skills,
+                    ranks = entity.ranks
             )
 
 }

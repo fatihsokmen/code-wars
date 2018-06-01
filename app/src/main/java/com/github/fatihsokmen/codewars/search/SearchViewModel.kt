@@ -17,6 +17,10 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
     private val recentUsers = MutableLiveData<List<UserDomain>>()
     private val searchedUser = MutableLiveData<UserDomain>()
 
+    init {
+        getRecent()
+    }
+
     fun recentUsers(): LiveData<List<UserDomain>> = recentUsers
 
     fun searchedUser(): LiveData<UserDomain> = searchedUser

@@ -9,6 +9,7 @@ class UserDtoToEntityMapper @Inject constructor() : Function<UserDto, UserEntity
 
     override fun apply(dto: UserDto): UserEntity =
             UserEntity(
-                    dto.userName, dto.name, dto.honor, dto.clan, dto.skills
+                    dto.userName, dto.name, dto.honor, dto.clan,
+                    dto.leaderboardPosition, dto.skills, dto.ranks
             )
 }

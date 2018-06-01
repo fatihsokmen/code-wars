@@ -53,7 +53,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         searchViewModel.recentUsers().observe(this, Observer { users ->
             users?.let { adapter.setData(users) }
         })
-        searchViewModel.getRecent()
     }
 
 
