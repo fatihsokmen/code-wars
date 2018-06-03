@@ -18,6 +18,9 @@ interface ChallengesFragmentComponent {
         @BindsInstance
         fun userName(userName: String): Builder
 
+        @BindsInstance
+        fun flow(flow: Flow): Builder
+
         fun baseComponent(baseComponent: BaseComponent): Builder
 
         fun build(): ChallengesFragmentComponent

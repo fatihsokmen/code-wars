@@ -13,8 +13,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.fatihsokmen.codewars.App
 import com.github.fatihsokmen.codewars.R
-import com.github.fatihsokmen.codewars.challenges.adapter.ChallengesResultsAdapter
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class ChallengesFragment : Fragment() {
@@ -28,7 +28,7 @@ class ChallengesFragment : Fragment() {
     lateinit var adapter: ChallengesResultsAdapter
 
 
-    private lateinit var viewModel: CompletedChallengesViewModel
+    private lateinit var viewModel: ChallengesViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,10 +36,11 @@ class ChallengesFragment : Fragment() {
         ButterKnife.bind(this, view)
 
         val userName = activity!!.intent!!.getStringExtra("userName")
+        val flow = arguments?.getSerializable("flow") as Flow
 
-        createChallengesComponent(this, userName).inject(this)
+        createChallengesComponent(this, userName, flow).inject(this)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CompletedChallengesViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ChallengesViewModel::class.java)
 
         bindViewModel()
 
@@ -48,20 +49,21 @@ class ChallengesFragment : Fragment() {
     }
 
     private fun bindViewModel() {
-        viewModel.challenges().observe(this, Observer { challenges ->
+        viewModel.challenges.observe(this, Observer { challenges ->
             challenges?.let {
-                adapter.submitList(it)
+                adapter.submitList(challenges)
             }
         })
     }
 
-
     companion object {
-        private fun createChallengesComponent(fragment: ChallengesFragment, userName: String): ChallengesFragmentComponent {
+        private fun createChallengesComponent(fragment: ChallengesFragment, userName: String, flow: Flow)
+                : ChallengesFragmentComponent {
             val baseComponent = (fragment.activity?.application as App).baseComponent
             return DaggerChallengesFragmentComponent
                     .builder()
                     .baseComponent(baseComponent)
+                    .flow(flow)
                     .userName(userName)
                     .build()
         }

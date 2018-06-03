@@ -2,7 +2,8 @@ package com.github.fatihsokmen.codewars.challenges
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.paging.DataSource
-import com.github.fatihsokmen.codewars.data.CompletedChallengeDomain
+import com.github.fatihsokmen.codewars.challenges.datasource.ChallengesDataSourceFactory
+import com.github.fatihsokmen.codewars.data.ChallengeDomain
 import com.github.fatihsokmen.codewars.data.remote.challenges.ChallengesApiService
 import com.github.fatihsokmen.codewars.dependency.scope.FragmentViewScope
 import dagger.Binds
@@ -15,12 +16,12 @@ abstract class ChallengesFragmentModule {
 
     @Binds
     @FragmentViewScope
-    abstract fun bindViewModelFactory(impl: CompletedChallengesViewModel.Factory): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(impl: ChallengesViewModel.Factory): ViewModelProvider.Factory
 
     @Binds
     @FragmentViewScope
     abstract fun bindPagingDataSourceFactory(impl: ChallengesDataSourceFactory):
-            DataSource.Factory<@JvmSuppressWildcards Int, @JvmSuppressWildcards CompletedChallengeDomain>
+            DataSource.Factory<@JvmSuppressWildcards Int, @JvmSuppressWildcards ChallengeDomain>
 
     @Module
     companion object {

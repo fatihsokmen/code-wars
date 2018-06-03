@@ -11,10 +11,10 @@ interface ChallengesApiService {
     @GET("users/{username}/code-challenges/completed")
     fun getCompletedChallenges(
             @Path("username") userName: String,
-            @Query("page") page: Int): Observable<CompletedChallengesDto>
+            @Query("page") page: Int): Observable<CompletedChallengesResponseDto>
 
     @GET("users/{username}/code-challenges/authored")
     fun getAuthoredChallenges(
-            @Path("username") userName: String): Observable<CompletedChallengesDto>
+            @Path("username") userName: String): Observable<AuthoredChallengesResponseDto>
 
 }

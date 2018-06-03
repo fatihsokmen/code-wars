@@ -1,23 +1,23 @@
-package com.github.fatihsokmen.codewars.challenges
+package com.github.fatihsokmen.codewars.challenges.datasource
 
 import android.arch.paging.PageKeyedDataSource
-import com.github.fatihsokmen.codewars.data.CompletedChallengeDomain
+import com.github.fatihsokmen.codewars.data.ChallengeDomain
 import com.github.fatihsokmen.codewars.data.mapper.challenges.CompletedChallengesDtoToDomainMapper
 import com.github.fatihsokmen.codewars.data.remote.challenges.ChallengesApiService
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class ChallengesDataSource @Inject constructor(
+class CompletedChallengesDataSource @Inject constructor(
         private val userName: String,
         private val challengesService: ChallengesApiService,
         private val challengesDtoToDomainMapper: CompletedChallengesDtoToDomainMapper)
-    : PageKeyedDataSource<Int, CompletedChallengeDomain>() {
+    : PageKeyedDataSource<Int, ChallengeDomain>() {
 
     private val subscriptions: CompositeDisposable by lazy {
         CompositeDisposable()
     }
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, CompletedChallengeDomain>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, ChallengeDomain>) {
         subscriptions.add(
                 challengesService.getCompletedChallenges(userName, params.requestedLoadSize)
                         .subscribe({ challenges ->
@@ -30,7 +30,7 @@ class ChallengesDataSource @Inject constructor(
         )
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, CompletedChallengeDomain>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, ChallengeDomain>) {
         subscriptions.add(
                 challengesService.getCompletedChallenges(userName, params.key)
                         .subscribe({ challenges ->
@@ -44,7 +44,7 @@ class ChallengesDataSource @Inject constructor(
         )
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, CompletedChallengeDomain>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, ChallengeDomain>) {
         subscriptions.add(
                 challengesService.getCompletedChallenges(userName, params.key)
                         .subscribe({ challenges ->

@@ -1,6 +1,6 @@
 package com.github.fatihsokmen.codewars.data
 
-data class CompletedChallengeDomain(
+data class ChallengeDomain(
         val id: String,
         val name: String
 )

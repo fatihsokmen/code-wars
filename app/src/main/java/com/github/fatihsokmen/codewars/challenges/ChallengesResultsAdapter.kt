@@ -1,4 +1,4 @@
-package com.github.fatihsokmen.codewars.challenges.adapter
+package com.github.fatihsokmen.codewars.challenges
 
 
 import android.arch.paging.PagedListAdapter
@@ -6,13 +6,12 @@ import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.fatihsokmen.codewars.R
-import com.github.fatihsokmen.codewars.challenges.viewholder.ChallengeViewHolder
-import com.github.fatihsokmen.codewars.data.CompletedChallengeDomain
+import com.github.fatihsokmen.codewars.data.ChallengeDomain
 import javax.inject.Inject
 
 
 class ChallengesResultsAdapter @Inject constructor()
-    : PagedListAdapter<CompletedChallengeDomain, ChallengeViewHolder>(ChallengesResultsAdapter.DIFF_CALLBACK) {
+    : PagedListAdapter<ChallengeDomain, ChallengeViewHolder>(DIFF_CALLBACK) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
@@ -28,16 +27,16 @@ class ChallengesResultsAdapter @Inject constructor()
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CompletedChallengeDomain>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ChallengeDomain>() {
             override fun areItemsTheSame(
-                    oldItem: CompletedChallengeDomain?,
-                    newItem: CompletedChallengeDomain?): Boolean {
+                    oldItem: ChallengeDomain?,
+                    newItem: ChallengeDomain?): Boolean {
                 return oldItem?.id == newItem?.id
             }
 
             override fun areContentsTheSame(
-                    oldItem: CompletedChallengeDomain?,
-                    newItem: CompletedChallengeDomain?): Boolean {
+                    oldItem: ChallengeDomain?,
+                    newItem: ChallengeDomain?): Boolean {
                 return oldItem?.id == newItem?.id
             }
         }

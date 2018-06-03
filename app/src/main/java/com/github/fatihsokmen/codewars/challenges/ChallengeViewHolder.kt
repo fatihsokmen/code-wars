@@ -1,4 +1,4 @@
-package com.github.fatihsokmen.codewars.challenges.viewholder
+package com.github.fatihsokmen.codewars.challenges
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -6,7 +6,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.fatihsokmen.codewars.R
-import com.github.fatihsokmen.codewars.data.CompletedChallengeDomain
+import com.github.fatihsokmen.codewars.data.ChallengeDomain
 
 
 class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,7 +18,7 @@ class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         ButterKnife.bind(this, itemView)
     }
 
-    fun bind(challenge: CompletedChallengeDomain?) {
+    fun bind(challenge: ChallengeDomain?) {
         name.text = challenge?.name
     }
 }

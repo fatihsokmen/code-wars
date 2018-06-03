@@ -2,13 +2,11 @@ package com.github.fatihsokmen.codewars.data.remote.challenges
 
 import com.google.gson.annotations.SerializedName
 
-data class CompletedChallengesResponseDto(
-        @SerializedName("totalPages") val totalPages: Int,
-        @SerializedName("totalItems") val totalItems: Int,
+data class AuthoredChallengesResponseDto(
         @SerializedName("data") val data: List<CompletedChallengeDto>
 )
 
-data class CompletedChallengeDto(
+data class AuthoredChallengeDto(
         @SerializedName("id") val id: String,
         @SerializedName("name") val name: String
 )

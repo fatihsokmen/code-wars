@@ -11,7 +11,6 @@ import android.view.MenuItem
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.fatihsokmen.codewars.R
-import com.github.fatihsokmen.codewars.challenges.adapter.ChallengesResultsAdapter
 import javax.inject.Inject
 
 class ChallengesActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -37,8 +36,6 @@ class ChallengesActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
 
         navigationView.setOnNavigationItemSelectedListener(this)
         navigationView.selectedItemId = R.id.action_show_completed_challenges
-
-
     }
 
     override fun onNavigationItemSelected(menu: MenuItem): Boolean {
@@ -51,11 +48,22 @@ class ChallengesActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
     }
 
     private fun changeFragment(itemId: Int) {
+        val arguments = Bundle()
         val fragment = when (itemId) {
-            R.id.action_show_completed_challenges -> ChallengesFragment()
-            R.id.action_show_authored_challenges -> ChallengesFragment()
+            R.id.action_show_completed_challenges -> {
+                val fragment = ChallengesFragment()
+                arguments.putSerializable("flow", Flow.COMPLETED_CHALLENGES)
+                fragment
+            }
+            R.id.action_show_authored_challenges -> {
+                val fragment = ChallengesFragment()
+                arguments.putSerializable("flow", Flow.AUTHORED_CHALLENGES)
+                fragment
+            }
             else -> throw IllegalArgumentException("Id is not supported")
         }
+        fragment.arguments = arguments
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment as Fragment, itemId.toString())
