@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
 import com.github.fatihsokmen.codewars.App
 import com.github.fatihsokmen.codewars.R
 import javax.inject.Inject
@@ -40,9 +39,19 @@ class ChallengeDetailsFragment : Fragment() {
     }
 
     private fun bindViewModel() {
-        viewModel.details.observe(this, Observer { challenges ->
-            challenges?.let { details ->
-                viewBindings.bind(details)
+        viewModel.details.observe(this, Observer { resource ->
+            resource?.let {
+                when (resource.status) {
+                    Status.LOADING -> viewBindings.showProgress(true)
+                    Status.SUCCESS -> {
+                        resource.data.let { viewBindings.bind(it!!) }
+                        viewBindings.showProgress(false)
+                    }
+                    Status.ERROR -> {
+                        viewBindings.showError(resource.errorMessage)
+                        viewBindings.showProgress(false)
+                    }
+                }
             }
         })
     }

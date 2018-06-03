@@ -18,20 +18,22 @@ class ChallengeDetailsViewModel constructor(
         CompositeDisposable()
     }
 
-    var details = MutableLiveData<ChallengeDetailsDomain>()
+    var details = MutableLiveData<ChallengeDetailsResource<ChallengeDetailsDomain>>()
 
     init {
         getChallengeDetails(challengeId)
     }
 
     private fun getChallengeDetails(challengeId: String) {
+        details.value = ChallengeDetailsResource.loading()
+
         subscriptions.add(challengeDetailsRepository.getChallengeDetails(challengeId)
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.main())
                 .subscribe({
-                    details.value = it
-                },{
-                    print("Error")
+                    details.value = ChallengeDetailsResource.success(it)
+                }, {
+                    details.value = ChallengeDetailsResource.error(it.message)
                 }))
     }
 

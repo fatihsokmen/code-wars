@@ -35,7 +35,9 @@ class ChallengesActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navigationView.setOnNavigationItemSelectedListener(this)
-        navigationView.selectedItemId = R.id.action_show_completed_challenges
+        if (savedInstanceState == null) {
+            navigationView.selectedItemId = R.id.action_show_completed_challenges
+        }
     }
 
     override fun onNavigationItemSelected(menu: MenuItem): Boolean {

@@ -7,7 +7,7 @@ import com.github.fatihsokmen.codewars.data.remote.challenges.ChallengeApiServic
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class CompletedChallengesDataSource @Inject constructor(
+class CompletedChallengesDataSource constructor(
         private val userName: String,
         private val challengesService: ChallengeApiService,
         private val challengesDtoToDomainMapper: CompletedChallengesDtoToDomainMapper)
