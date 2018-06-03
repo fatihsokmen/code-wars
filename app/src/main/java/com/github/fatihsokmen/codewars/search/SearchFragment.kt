@@ -96,6 +96,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         if (query.trim().isEmpty()) {
             viewModel.recentUsers().removeObserver(recentUsersObserver)
             viewModel.recentUsers().observe(this, recentUsersObserver)
+            return true
         }
         return false
     }
@@ -105,7 +106,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             viewModel.searchUser(query)
             return true
         }
-        return true
+        return false
     }
 
     companion object {
