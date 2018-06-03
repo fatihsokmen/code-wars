@@ -12,7 +12,6 @@ import ru.noties.markwon.Markwon
 
 class ChallengeDetailsViewBindings {
 
-
     @BindView(R.id.progress)
     lateinit var progress: ProgressBar
     @BindView(R.id.description)

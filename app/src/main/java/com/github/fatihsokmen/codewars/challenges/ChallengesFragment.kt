@@ -1,5 +1,6 @@
 package com.github.fatihsokmen.codewars.challenges
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -9,10 +10,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.fatihsokmen.codewars.App
 import com.github.fatihsokmen.codewars.R
+import kotlinx.android.synthetic.main.fragment_challenge_details.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,6 +24,8 @@ class ChallengesFragment : Fragment() {
 
     @BindView(R.id.challenges)
     lateinit var challengesResultView: RecyclerView
+    @BindView(R.id.progress)
+    lateinit var progress: ProgressBar
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -54,6 +59,17 @@ class ChallengesFragment : Fragment() {
                 adapter.submitList(challenges)
             }
         })
+        viewModel.progressingData().observe(this, Observer { resource ->
+            resource?.let {
+                when (resource.status) {
+                    ChallengeProgressingResource.Status.LOADING -> progress.visibility = View.VISIBLE
+                    ChallengeProgressingResource.Status.SUCCESS -> progress.visibility = View.GONE
+                    ChallengeProgressingResource.Status.ERROR -> {
+                        progress.visibility = View.GONE
+                    }
+                }
+            }
+        })
     }
 
     companion object {
@@ -65,6 +81,7 @@ class ChallengesFragment : Fragment() {
                     .baseComponent(baseComponent)
                     .flow(flow)
                     .userName(userName)
+                    .progressingData(MutableLiveData())
                     .build()
         }
     }

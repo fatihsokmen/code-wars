@@ -12,7 +12,8 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ChallengesViewModel constructor(
-        challengesDataSourceFactory: DataSource.Factory<Int, ChallengeDomain>
+        challengesDataSourceFactory: DataSource.Factory<Int, ChallengeDomain>,
+        private val progressingData: MutableLiveData<ChallengeProgressingResource>
 ) : ViewModel() {
 
     private val subscriptions: CompositeDisposable by lazy {
@@ -31,19 +32,22 @@ class ChallengesViewModel constructor(
                 challengesDataSourceFactory, config).build()
     }
 
+    fun progressingData() = progressingData
+
     override fun onCleared() {
         subscriptions.clear()
     }
 
     class Factory @Inject constructor(
-            private val dataSourceFactory: DataSource.Factory<Int, ChallengeDomain>)
+            private val dataSourceFactory: DataSource.Factory<Int, ChallengeDomain>,
+            private val progressingData: MutableLiveData<ChallengeProgressingResource>)
         : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
             if (modelClass.isAssignableFrom(ChallengesViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return ChallengesViewModel(dataSourceFactory) as T
+                return ChallengesViewModel(dataSourceFactory, progressingData) as T
             }
             throw IllegalArgumentException("Unsupported ViewModel class")
         }
