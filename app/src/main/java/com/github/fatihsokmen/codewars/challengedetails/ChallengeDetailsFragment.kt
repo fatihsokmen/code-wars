@@ -27,7 +27,8 @@ class ChallengeDetailsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_challenge_details, container, false)
         viewBindings.init(view)
 
-        val challenge = activity!!.intent!!.getStringExtra("challengeId")
+        val challenge = activity?.intent?.getStringExtra("challengeId")
+                ?: throw IllegalArgumentException("Challenge id does not exist in bundle")
 
         createChallengeDetailsComponent(this, challenge).inject(this)
 

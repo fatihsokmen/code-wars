@@ -12,13 +12,13 @@
     android:clickable="true"
     android:focusable="true">
 
-    <View
-        android:id="@+id/avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/search_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:contentDescription="@null"
-        android:background="#DDD"/>
+        android:src="@drawable/ic_search" />
 
     <TextView
         android:id="@+id/name"
@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_toEndOf="@id/avatar"
+        android:layout_toEndOf="@id/search_badge"
         android:layout_toStartOf="@id/rank"
         android:textStyle="bold"
         tools:text="name" />

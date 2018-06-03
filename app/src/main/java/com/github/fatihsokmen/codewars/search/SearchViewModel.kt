@@ -5,30 +5,35 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
-import com.github.fatihsokmen.codewars.data.UserDomain
+import com.github.fatihsokmen.codewars.R.id.users
 import com.github.fatihsokmen.codewars.dependency.scheduler.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class SearchViewModel constructor(private val searchRepository: SearchRepository,
+                                  private val userHistoryDomainToModelMapper: UserHistoryDomainToModelMapper,
+                                  private val userDomainToModelMapper: UserDomainToModelMapper,
                                   private val scheduler: Scheduler) : ViewModel() {
 
     private val subscriptions = CompositeDisposable()
-    private val recentUsers = MutableLiveData<List<UserDomain>>()
-    private val searchedUser = MutableLiveData<UserDomain>()
+    private val recentUsers = MutableLiveData<List<UserModel>>()
+    private val searchedUser = MutableLiveData<SearchResource<UserModel>>()
 
     init {
         getRecent()
     }
 
-    fun recentUsers(): LiveData<List<UserDomain>> = recentUsers
+    fun recentUsers(): LiveData<List<UserModel>> = recentUsers
 
-    fun searchedUser(): LiveData<UserDomain> = searchedUser
+    fun searchedUser(): LiveData<SearchResource<UserModel>> = searchedUser
 
     private fun getRecent() {
         subscriptions.add(searchRepository.getRecent()
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.main())
+                .map { userDomains ->
+                    userHistoryDomainToModelMapper.apply(userDomains)
+                }
                 .subscribe({ users ->
                     recentUsers.value = users
                 }, { throwable ->
@@ -39,18 +44,17 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
     }
 
     fun searchUser(query: String) {
-        if (query.isEmpty()) {
-            searchedUser.value = null
-        }
+        searchedUser.value = SearchResource.loading()
         subscriptions.add(searchRepository.searchUser(query)
+                .map { userDomain ->
+                    userDomainToModelMapper.apply(userDomain)
+                }
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.main())
                 .subscribe({ user ->
-                    searchedUser.value = user
+                    searchedUser.value = SearchResource.success(user)
                 }, { throwable ->
-                    Log.d(TAG, throwable.message)
-                }, {
-                    Log.d(TAG, "Completed")
+                    searchedUser.value = SearchResource.error(throwable.message)
                 }))
     }
 
@@ -61,13 +65,16 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
 
     class Factory @Inject constructor(
             private val searchRepository: SearchRepository,
-            private val scheduler: Scheduler)
-        : ViewModelProvider.Factory {
+            private val userHistoryDomainToModelMapper: UserHistoryDomainToModelMapper,
+            private val userDomainToModelMapper: UserDomainToModelMapper,
+            private val scheduler: Scheduler
+    ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SearchViewModel(searchRepository, scheduler) as T
+                return SearchViewModel(searchRepository, userHistoryDomainToModelMapper,
+                        userDomainToModelMapper, scheduler) as T
             }
             throw IllegalArgumentException("Unsupported ViewModel class")
         }

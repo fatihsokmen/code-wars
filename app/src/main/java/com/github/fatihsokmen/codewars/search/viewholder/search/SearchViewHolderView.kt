@@ -1,4 +1,4 @@
-package com.github.fatihsokmen.codewars.search.viewholder
+package com.github.fatihsokmen.codewars.search.viewholder.search
 
 import android.view.View
 import android.widget.TextView
@@ -7,8 +7,9 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.github.fatihsokmen.codewars.R
 import com.github.fatihsokmen.codewars.challenges.ChallengesActivity
-import com.github.fatihsokmen.codewars.data.UserDomain
 import com.github.fatihsokmen.codewars.dependency.resource.IStringResources
+import com.github.fatihsokmen.codewars.search.UserModel
+import com.github.fatihsokmen.codewars.search.viewholder.BaseViewHolder
 import javax.inject.Inject
 
 class SearchViewHolderView @Inject constructor(
@@ -23,23 +24,19 @@ class SearchViewHolderView @Inject constructor(
     @BindView(R.id.languages)
     lateinit var languagesView: TextView
 
-    private lateinit var user: UserDomain
+    private lateinit var user: UserModel
 
     init {
         ButterKnife.bind(this, itemView)
     }
 
-    override fun bind(user: UserDomain) {
+    override fun bind(user: UserModel) {
         this.user = user
 
         nameView.text = user.userName
+        languagesView.text = user.languages
         rankView.text = stringResources.getString(R.string.user_rank, user.leaderboardPosition)
 
-        val languages = StringBuilder()
-        for (language in user.ranks.languages.keys) {
-            languages.append("\u2022").append(language).append("  ")
-        }
-        languagesView.text = languages.toString()
     }
 
     @OnClick(R.id.item_view)

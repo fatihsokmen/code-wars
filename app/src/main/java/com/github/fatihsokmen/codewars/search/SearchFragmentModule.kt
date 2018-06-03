@@ -1,7 +1,6 @@
 package com.github.fatihsokmen.codewars.search
 
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
@@ -10,11 +9,10 @@ import com.github.fatihsokmen.codewars.R
 import com.github.fatihsokmen.codewars.data.remote.search.UserSearchService
 import com.github.fatihsokmen.codewars.dependency.BaseComponent
 import com.github.fatihsokmen.codewars.dependency.scope.FragmentViewScope
-import com.github.fatihsokmen.codewars.search.adapter.SearchResultsAdapter
 import com.github.fatihsokmen.codewars.search.viewholder.BaseViewHolderFactory
-import com.github.fatihsokmen.codewars.search.viewholder.DaggerRecentViewHolderFactory
-import com.github.fatihsokmen.codewars.search.viewholder.DaggerSearchViewHolderFactory
 import com.github.fatihsokmen.codewars.search.viewholder.ViewHolderLayoutModule
+import com.github.fatihsokmen.codewars.search.viewholder.recent.DaggerRecentViewHolderFactory
+import com.github.fatihsokmen.codewars.search.viewholder.search.DaggerSearchViewHolderFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -41,19 +39,19 @@ abstract class SearchFragmentModule {
 
         @JvmStatic
         @IntoMap
-        @IntKey(SearchResultsAdapter.TYPE_SEARCH_ITEM)
+        @IntKey(UserModel.HISTORY)
         @FragmentViewScope
         @Provides
         fun provideUserViewHolderFactory(baseComponent: BaseComponent): BaseViewHolderFactory.Builder {
             return DaggerSearchViewHolderFactory
                     .builder()
                     .baseComponent(baseComponent)
-                    .layoutModule(ViewHolderLayoutModule(R.layout.view_search_item))
+                    .layoutModule(ViewHolderLayoutModule(R.layout.view_history_item))
         }
 
         @JvmStatic
         @IntoMap
-        @IntKey(SearchResultsAdapter.TYPE_RECENT_ITEM)
+        @IntKey(UserModel.RECENT)
         @FragmentViewScope
         @Provides
         fun provideRecentViewHolderFactory(baseComponent: BaseComponent): BaseViewHolderFactory.Builder {
@@ -61,6 +59,18 @@ abstract class SearchFragmentModule {
                     .builder()
                     .baseComponent(baseComponent)
                     .layoutModule(ViewHolderLayoutModule(R.layout.view_recent_item))
+        }
+
+        @JvmStatic
+        @IntoMap
+        @IntKey(UserModel.SEARCH)
+        @FragmentViewScope
+        @Provides
+        fun provideSearchViewHolderFactory(baseComponent: BaseComponent): BaseViewHolderFactory.Builder {
+            return DaggerSearchViewHolderFactory
+                    .builder()
+                    .baseComponent(baseComponent)
+                    .layoutModule(ViewHolderLayoutModule(R.layout.view_search_item))
         }
 
         @JvmStatic

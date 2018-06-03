@@ -40,7 +40,8 @@ class ChallengesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_challenges, container, false)
         ButterKnife.bind(this, view)
 
-        val userName = activity!!.intent!!.getStringExtra("userName")
+        val userName = activity?.intent?.getStringExtra("userName")
+                ?: throw IllegalArgumentException("User name does not exist in bundle")
         val flow = arguments?.getSerializable("flow") as Flow
 
         createChallengesComponent(this, userName, flow).inject(this)
