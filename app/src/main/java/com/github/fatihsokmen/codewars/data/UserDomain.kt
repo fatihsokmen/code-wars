@@ -1,6 +1,6 @@
-package com.github.fatihsokmen.codewars.datasource
+package com.github.fatihsokmen.codewars.data
 
-import com.github.fatihsokmen.codewars.datasource.remote.Ranks
+import com.github.fatihsokmen.codewars.data.remote.search.Ranks
 
 data class UserDomain(
         @JvmField val userName: String,

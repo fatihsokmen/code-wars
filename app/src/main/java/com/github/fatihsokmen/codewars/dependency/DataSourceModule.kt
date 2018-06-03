@@ -2,8 +2,8 @@ package com.github.fatihsokmen.codewars.dependency
 
 import android.app.Application
 import android.arch.persistence.room.Room
-import com.github.fatihsokmen.codewars.datasource.local.SearchDatabase
-import com.github.fatihsokmen.codewars.datasource.local.UserDao
+import com.github.fatihsokmen.codewars.data.local.SearchDatabase
+import com.github.fatihsokmen.codewars.data.local.UserDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,11 +1,11 @@
-package com.github.fatihsokmen.codewars.datasource.local
+package com.github.fatihsokmen.codewars.data.local
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 
 @Database(entities = [UserEntity::class], version = SearchDatabase.VERSION, exportSchema = false)
-@TypeConverters(StringListTypeConverters::class, RanksTypeConverters::class)
+@TypeConverters(StringListTypeConverters::class, RanksTypeConverters::class, DateTypeConverter::class)
 abstract class SearchDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

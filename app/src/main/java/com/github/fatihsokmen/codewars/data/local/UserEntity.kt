@@ -1,9 +1,10 @@
-package com.github.fatihsokmen.codewars.datasource.local
+package com.github.fatihsokmen.codewars.data.local
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import com.github.fatihsokmen.codewars.datasource.remote.Ranks
+import com.github.fatihsokmen.codewars.data.remote.search.Ranks
+import java.util.*
 
 @Entity(tableName = "User")
 data class UserEntity(
@@ -20,7 +21,9 @@ data class UserEntity(
         @ColumnInfo(name = "skills")
         val skills: List<String>? = null,
         @ColumnInfo(name = "ranks")
-        val ranks: Ranks
+        val ranks: Ranks,
+        @ColumnInfo(name = "date")
+        val date: Date = Calendar.getInstance().time
 )
 
 

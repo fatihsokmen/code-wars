@@ -1,7 +1,7 @@
-package com.github.fatihsokmen.codewars.datasource.local
+package com.github.fatihsokmen.codewars.data.local
 
 import android.arch.persistence.room.TypeConverter
-import com.github.fatihsokmen.codewars.datasource.remote.Ranks
+import com.github.fatihsokmen.codewars.data.remote.search.Ranks
 import com.google.gson.Gson
 
 object RanksTypeConverters {

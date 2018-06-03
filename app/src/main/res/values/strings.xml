@@ -3,4 +3,7 @@
 
     <string name="user_rank">#%1$s</string>
     <string name="recent">Recent searches</string>
+    <string name="completed">Completed</string>
+    <string name="authored">Authored</string>
+    <string name="challenges">Challenges</string>
 </resources>

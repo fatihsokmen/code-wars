@@ -4,7 +4,7 @@ package com.github.fatihsokmen.codewars.dependency
 import android.app.Application
 import android.content.Context
 
-import com.github.fatihsokmen.codewars.datasource.local.UserDao
+import com.github.fatihsokmen.codewars.data.local.UserDao
 import com.github.fatihsokmen.codewars.dependency.resource.IStringResources
 import com.github.fatihsokmen.codewars.dependency.scheduler.Scheduler
 

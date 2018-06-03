@@ -1,4 +1,4 @@
-package com.github.fatihsokmen.codewars.datasource.remote
+package com.github.fatihsokmen.codewars.data.remote.search
 
 import com.google.gson.annotations.SerializedName
 

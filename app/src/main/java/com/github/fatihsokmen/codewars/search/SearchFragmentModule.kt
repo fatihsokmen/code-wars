@@ -2,12 +2,19 @@ package com.github.fatihsokmen.codewars.search
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.RecyclerView
 import com.github.fatihsokmen.codewars.R
-import com.github.fatihsokmen.codewars.datasource.remote.UserSearchService
+import com.github.fatihsokmen.codewars.data.remote.search.UserSearchService
 import com.github.fatihsokmen.codewars.dependency.BaseComponent
 import com.github.fatihsokmen.codewars.dependency.scope.FragmentViewScope
 import com.github.fatihsokmen.codewars.search.adapter.SearchResultsAdapter
-import com.github.fatihsokmen.codewars.search.viewholder.*
+import com.github.fatihsokmen.codewars.search.viewholder.BaseViewHolderFactory
+import com.github.fatihsokmen.codewars.search.viewholder.DaggerRecentViewHolderFactory
+import com.github.fatihsokmen.codewars.search.viewholder.DaggerSearchViewHolderFactory
+import com.github.fatihsokmen.codewars.search.viewholder.ViewHolderLayoutModule
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,14 +31,6 @@ abstract class SearchFragmentModule {
 
     @Module
     companion object {
-
-        @JvmStatic
-        @Provides
-        @FragmentViewScope
-        fun provideViewModel(fragment: SearchFragment,
-                             viewModelFactory: ViewModelProvider.Factory): SearchViewModel {
-            return ViewModelProviders.of(fragment, viewModelFactory).get(SearchViewModel::class.java)
-        }
 
         @JvmStatic
         @Provides
@@ -62,6 +61,17 @@ abstract class SearchFragmentModule {
                     .builder()
                     .baseComponent(baseComponent)
                     .layoutModule(ViewHolderLayoutModule(R.layout.view_recent_item))
+        }
+
+        @JvmStatic
+        @Provides
+        @FragmentViewScope
+        fun provideItemDecoration(context: Context): RecyclerView.ItemDecoration {
+            val itemDecoration = DividerItemDecoration(context,
+                    DividerItemDecoration.VERTICAL)
+            itemDecoration.setDrawable(ContextCompat.getDrawable(
+                    context, android.R.drawable.divider_horizontal_bright)!!)
+            return itemDecoration
         }
     }
 }

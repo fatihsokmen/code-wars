@@ -1,7 +1,7 @@
 package com.github.fatihsokmen.codewars.search.viewholder
 
 import android.view.View
-import com.github.fatihsokmen.codewars.datasource.UserDomain
+import com.github.fatihsokmen.codewars.data.UserDomain
 import javax.inject.Inject
 
 class RecentViewHolderView @Inject constructor(itemView: View)

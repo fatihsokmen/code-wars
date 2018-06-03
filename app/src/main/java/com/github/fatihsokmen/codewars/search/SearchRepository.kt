@@ -1,13 +1,13 @@
 package com.github.fatihsokmen.codewars.search
 
-import com.github.fatihsokmen.codewars.datasource.UserDomain
-import com.github.fatihsokmen.codewars.datasource.local.UserDao
-import com.github.fatihsokmen.codewars.datasource.mapper.UserDtoToDomainMapper
-import com.github.fatihsokmen.codewars.datasource.mapper.UserDtoToEntityMapper
-import com.github.fatihsokmen.codewars.datasource.mapper.UserEntityToDomainMapper
-import com.github.fatihsokmen.codewars.datasource.remote.UserSearchService
+import com.github.fatihsokmen.codewars.data.UserDomain
+import com.github.fatihsokmen.codewars.data.local.UserDao
+import com.github.fatihsokmen.codewars.data.mapper.search.UserDtoToDomainMapper
+import com.github.fatihsokmen.codewars.data.mapper.search.UserDtoToEntityMapper
+import com.github.fatihsokmen.codewars.data.mapper.search.UserEntityToDomainMapper
+import com.github.fatihsokmen.codewars.data.remote.search.UserSearchService
 import io.reactivex.Flowable
-import io.reactivex.Single
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(
@@ -22,10 +22,11 @@ class SearchRepository @Inject constructor(
                 userEntityToDomainMapper.apply(entities)
             }
 
-    fun searchUser(userName: String): Single<UserDomain> =
-            userSearchService.getUser(userName).doOnSuccess { dto ->
+    fun searchUser(userName: String): Observable<UserDomain> =
+            userSearchService.getUser(userName).doOnNext { dto ->
                 userDao.insert(userDtoToEntityMapper.apply(dto))
             }.map { dto ->
                 userDtoToDomainMapper.apply(dto)
             }
 }
+

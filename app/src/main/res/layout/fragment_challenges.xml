@@ -1,0 +1,16 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.github.fatihsokmen.codewars.challenges.ChallengesActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/challenges"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/view_search_item" />
+
+</android.support.design.widget.CoordinatorLayout>

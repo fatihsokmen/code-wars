@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
-import com.github.fatihsokmen.codewars.datasource.UserDomain
+import com.github.fatihsokmen.codewars.data.UserDomain
 import com.github.fatihsokmen.codewars.dependency.scheduler.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
 
     fun searchedUser(): LiveData<UserDomain> = searchedUser
 
-    fun getRecent() {
+    private fun getRecent() {
         subscriptions.add(searchRepository.getRecent()
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.main())
@@ -39,6 +39,9 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
     }
 
     fun searchUser(query: String) {
+        if (query.isEmpty()) {
+            searchedUser.value = null
+        }
         subscriptions.add(searchRepository.searchUser(query)
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.main())
@@ -46,6 +49,8 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
                     searchedUser.value = user
                 }, { throwable ->
                     Log.d(TAG, throwable.message)
+                }, {
+                    Log.d(TAG, "Completed")
                 }))
     }
 
@@ -61,6 +66,7 @@ class SearchViewModel constructor(private val searchRepository: SearchRepository
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
                 return SearchViewModel(searchRepository, scheduler) as T
             }
             throw IllegalArgumentException("Unsupported ViewModel class")

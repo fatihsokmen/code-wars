@@ -1,7 +1,7 @@
-package com.github.fatihsokmen.codewars.datasource.mapper
+package com.github.fatihsokmen.codewars.data.mapper.search
 
-import com.github.fatihsokmen.codewars.datasource.UserDomain
-import com.github.fatihsokmen.codewars.datasource.remote.UserDto
+import com.github.fatihsokmen.codewars.data.UserDomain
+import com.github.fatihsokmen.codewars.data.remote.search.UserDto
 import io.reactivex.functions.Function
 import javax.inject.Inject
 

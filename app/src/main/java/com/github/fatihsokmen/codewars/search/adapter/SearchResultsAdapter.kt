@@ -3,7 +3,7 @@ package com.github.fatihsokmen.codewars.search.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.github.fatihsokmen.codewars.datasource.UserDomain
+import com.github.fatihsokmen.codewars.data.UserDomain
 import com.github.fatihsokmen.codewars.search.viewholder.BaseViewHolderFactory
 import com.github.fatihsokmen.codewars.search.viewholder.BaseViewHolder
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.github.fatihsokmen.codewars.datasource.local
+package com.github.fatihsokmen.codewars.data.local
 
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson

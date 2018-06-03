@@ -22,13 +22,15 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     @BindView(R.id.search)
     lateinit var searchView: SearchView
-    @BindView(R.id.words)
+    @BindView(R.id.users)
     lateinit var searchResultView: RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var adapter: SearchResultsAdapter
+    @Inject
+    lateinit var itemDecorator: RecyclerView.ItemDecoration
 
     private lateinit var searchViewModel: SearchViewModel
 
@@ -41,6 +43,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         searchViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel::class.java)
 
+        searchResultView.addItemDecoration(itemDecorator)
         searchResultView.adapter = adapter
         searchView.setOnQueryTextListener(this)
 
@@ -57,8 +60,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
     override fun onQueryTextChange(query: String): Boolean {
-        searchViewModel.searchUser(query)
-        return true
+        return false
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
