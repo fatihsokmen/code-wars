@@ -46,7 +46,6 @@ class SearchViewHolderView @Inject constructor(
     fun onUserClicked() {
         val context = itemView.context
         val intent = ChallengesActivity.getIntent(context = context, userName = user.userName)
-        intent.putExtra("userName", user.userName)
         context.startActivity(intent)
     }
 

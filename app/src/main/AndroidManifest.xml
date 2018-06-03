@@ -27,5 +27,11 @@
             android:label="@string/challenges"
             android:theme="@style/AppTheme">
         </activity>
+
+        <activity
+            android:name=".challengedetails.ChallengeDetailsActivity"
+            android:label="@string/challenge_details"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 </manifest>

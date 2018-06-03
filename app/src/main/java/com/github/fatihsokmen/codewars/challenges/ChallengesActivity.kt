@@ -47,6 +47,15 @@ class ChallengesActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean =
+            when (item?.itemId) {
+                android.R.id.home -> {
+                    onBackPressed()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+
     private fun changeFragment(itemId: Int) {
         val arguments = Bundle()
         val fragment = when (itemId) {
@@ -73,6 +82,10 @@ class ChallengesActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
     companion object {
 
         @JvmStatic
-        fun getIntent(context: Context, userName: String) = Intent(context, ChallengesActivity::class.java)
+        fun getIntent(context: Context, userName: String): Intent {
+            val intent = Intent(context, ChallengesActivity::class.java)
+            intent.putExtra("userName", userName)
+            return intent
+        }
     }
 }

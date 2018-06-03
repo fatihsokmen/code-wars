@@ -7,13 +7,13 @@ import com.github.fatihsokmen.codewars.challenges.Flow.COMPLETED_CHALLENGES
 import com.github.fatihsokmen.codewars.data.ChallengeDomain
 import com.github.fatihsokmen.codewars.data.mapper.challenges.AuthoredChallengesDtoToDomainMapper
 import com.github.fatihsokmen.codewars.data.mapper.challenges.CompletedChallengesDtoToDomainMapper
-import com.github.fatihsokmen.codewars.data.remote.challenges.ChallengesApiService
+import com.github.fatihsokmen.codewars.data.remote.challenges.ChallengeApiService
 import javax.inject.Inject
 
 class ChallengesDataSourceFactory @Inject constructor(
         private val userName: String,
         private val flow: Flow,
-        private val challengesApiService: ChallengesApiService,
+        private val challengesApiService: ChallengeApiService,
         private val completedDtoToDomainMapper: CompletedChallengesDtoToDomainMapper,
         private val authoredDtoToDomainMapper: AuthoredChallengesDtoToDomainMapper)
     : DataSource.Factory<Int, ChallengeDomain>() {

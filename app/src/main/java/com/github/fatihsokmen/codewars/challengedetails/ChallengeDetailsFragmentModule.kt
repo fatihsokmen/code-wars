@@ -1,9 +1,6 @@
-package com.github.fatihsokmen.codewars.challenges
+package com.github.fatihsokmen.codewars.challengedetails
 
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.paging.DataSource
-import com.github.fatihsokmen.codewars.challenges.datasource.ChallengesDataSourceFactory
-import com.github.fatihsokmen.codewars.data.ChallengeDomain
 import com.github.fatihsokmen.codewars.data.remote.challenges.ChallengeApiService
 import com.github.fatihsokmen.codewars.dependency.scope.FragmentViewScope
 import dagger.Binds
@@ -12,16 +9,11 @@ import dagger.Provides
 import retrofit2.Retrofit
 
 @Module
-abstract class ChallengesFragmentModule {
+abstract class ChallengeDetailsFragmentModule {
 
     @Binds
     @FragmentViewScope
-    abstract fun bindViewModelFactory(impl: ChallengesViewModel.Factory): ViewModelProvider.Factory
-
-    @Binds
-    @FragmentViewScope
-    abstract fun bindPagingDataSourceFactory(impl: ChallengesDataSourceFactory):
-            DataSource.Factory<@JvmSuppressWildcards Int, @JvmSuppressWildcards ChallengeDomain>
+    abstract fun bindViewModelFactory(impl: ChallengeDetailsViewModel.Factory): ViewModelProvider.Factory
 
     @Module
     companion object {

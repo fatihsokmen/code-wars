@@ -2,7 +2,6 @@ package com.github.fatihsokmen.codewars.challenges
 
 import com.github.fatihsokmen.codewars.dependency.BaseComponent
 import com.github.fatihsokmen.codewars.dependency.scope.FragmentViewScope
-
 import dagger.BindsInstance
 import dagger.Component
 
