@@ -10,14 +10,14 @@ import com.github.fatihsokmen.codewars.R
 import com.github.fatihsokmen.codewars.data.ChallengeDetailsDomain
 import ru.noties.markwon.Markwon
 
-class ChallengeDetailsViewBindings {
+class ChallengeDetailsViewBindings constructor(view: View) {
 
     @BindView(R.id.progress)
     lateinit var progress: ProgressBar
     @BindView(R.id.description)
     lateinit var descriptionView: TextView
 
-    fun init(view: View) {
+    init {
         ButterKnife.bind(this, view)
     }
 

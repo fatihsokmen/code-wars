@@ -19,13 +19,12 @@ class ChallengeDetailsFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: ChallengeDetailsViewModel
-
-    private var viewBindings = ChallengeDetailsViewBindings()
+    private lateinit var viewBindings: ChallengeDetailsViewBindings
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_challenge_details, container, false)
-        viewBindings.init(view)
+        viewBindings = ChallengeDetailsViewBindings(view)
 
         val challenge = activity?.intent?.getStringExtra("challengeId")
                 ?: throw IllegalArgumentException("Challenge id does not exist in bundle")
