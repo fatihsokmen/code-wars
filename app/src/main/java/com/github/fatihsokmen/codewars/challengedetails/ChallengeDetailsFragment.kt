@@ -44,7 +44,7 @@ class ChallengeDetailsFragment : Fragment() {
                 when (resource.status) {
                     Status.LOADING -> viewBindings.showProgress(true)
                     Status.SUCCESS -> {
-                        resource.data.let { viewBindings.bind(it!!) }
+                        resource.data?.let { viewBindings.bind(it) }
                         viewBindings.showProgress(false)
                     }
                     Status.ERROR -> {
