@@ -39,7 +39,7 @@ class ChallengeDetailsFragment : Fragment() {
     }
 
     private fun bindViewModel() {
-        viewModel.details.observe(this, Observer { resource ->
+        viewModel.details().observe(this, Observer { resource ->
             resource?.let {
                 when (resource.status) {
                     Status.LOADING -> viewBindings.showProgress(true)

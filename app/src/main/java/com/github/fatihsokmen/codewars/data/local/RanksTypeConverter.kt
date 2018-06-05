@@ -4,7 +4,7 @@ import android.arch.persistence.room.TypeConverter
 import com.github.fatihsokmen.codewars.data.remote.search.Ranks
 import com.google.gson.Gson
 
-object RanksTypeConverters {
+object RanksTypeConverter {
 
     private val gson = Gson()
 

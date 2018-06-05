@@ -5,7 +5,7 @@ import com.github.fatihsokmen.codewars.data.remote.search.UserDto
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
-class UserDtoToDomainMapper @Inject constructor() : Function<UserDto, UserDomain> {
+open class UserDtoToDomainMapper @Inject constructor() : Function<UserDto, UserDomain> {
 
     override fun apply(dto: UserDto): UserDomain =
             UserDomain(

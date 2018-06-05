@@ -5,16 +5,16 @@ import com.github.fatihsokmen.codewars.search.UserModel.Companion.SEARCH
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
-class UserDomainToModelMapper @Inject constructor() : Function<UserDomain, UserModel> {
+open class UserDomainToModelMapper @Inject constructor() : Function<UserDomain, UserModel> {
 
     override fun apply(domain: UserDomain): UserModel =
-        UserModel(
-                SEARCH,
-                domain.userName,
-                domain.name,
-                domain.leaderboardPosition,
-                mapLanguages(domain.ranks.languages.keys)
-        )
+            UserModel(
+                    SEARCH,
+                    domain.userName,
+                    domain.name,
+                    domain.leaderboardPosition,
+                    mapLanguages(domain.ranks.languages.keys)
+            )
 
     private fun mapLanguages(languageSet: Set<String>): String {
         val languages = StringBuilder()

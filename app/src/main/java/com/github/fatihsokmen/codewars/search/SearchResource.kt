@@ -1,9 +1,11 @@
 package com.github.fatihsokmen.codewars.search
 
-class SearchResource<T> private constructor(
+data class SearchResource<T> private constructor(
         val status: Status,
         val data: T?,
         val errorMessage: String?) {
+
+    fun status() = status
 
     companion object {
         fun <T> success(data: T?): SearchResource<T> {

@@ -5,41 +5,39 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
-import com.github.fatihsokmen.codewars.R.id.users
 import com.github.fatihsokmen.codewars.dependency.scheduler.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class SearchViewModel constructor(private val searchRepository: SearchRepository,
+class SearchViewModel constructor(private val searchRepository: ISearchRepository,
                                   private val userHistoryDomainToModelMapper: UserHistoryDomainToModelMapper,
                                   private val userDomainToModelMapper: UserDomainToModelMapper,
                                   private val scheduler: Scheduler) : ViewModel() {
 
     private val subscriptions = CompositeDisposable()
-    private val recentUsers = MutableLiveData<List<UserModel>>()
     private val searchedUser = MutableLiveData<SearchResource<UserModel>>()
+    private var recentUsers: MutableLiveData<List<UserModel>>? = null
 
-    init {
-        getRecent()
+    fun recentUsers(): LiveData<List<UserModel>> {
+        if (recentUsers == null) {
+            recentUsers = MutableLiveData()
+            loadRecentUsers()
+        }
+        return recentUsers as LiveData<List<UserModel>>
     }
-
-    fun recentUsers(): LiveData<List<UserModel>> = recentUsers
 
     fun searchedUser(): LiveData<SearchResource<UserModel>> = searchedUser
 
-    private fun getRecent() {
+    private fun loadRecentUsers() {
         subscriptions.add(searchRepository.getRecent()
-                .subscribeOn(scheduler.io())
-                .observeOn(scheduler.main())
                 .map { userDomains ->
                     userHistoryDomainToModelMapper.apply(userDomains)
                 }
+                .subscribeOn(scheduler.io())
                 .subscribe({ users ->
-                    recentUsers.value = users
+                    recentUsers?.postValue(users)
                 }, { throwable ->
                     Log.d(TAG, throwable.message)
-                }, {
-                    Log.d(TAG, "Completed")
                 }))
     }
 

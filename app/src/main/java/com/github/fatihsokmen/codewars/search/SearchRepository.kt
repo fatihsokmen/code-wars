@@ -15,14 +15,14 @@ class SearchRepository @Inject constructor(
         private val userSearchService: UserSearchService,
         private val userDtoToEntityMapper: UserDtoToEntityMapper,
         private val userEntityToDomainMapper: UserEntityToDomainMapper,
-        private val userDtoToDomainMapper: UserDtoToDomainMapper) {
+        private val userDtoToDomainMapper: UserDtoToDomainMapper): ISearchRepository {
 
-    fun getRecent(): Flowable<List<UserDomain>> =
+    override fun getRecent(): Flowable<List<UserDomain>> =
             userDao.getUsers().map { entities ->
                 userEntityToDomainMapper.apply(entities)
             }
 
-    fun searchUser(userName: String): Observable<UserDomain> =
+    override fun searchUser(userName: String): Observable<UserDomain> =
             userSearchService.getUser(userName).doOnNext { dto ->
                 userDao.insert(userDtoToEntityMapper.apply(dto))
             }.map { dto ->

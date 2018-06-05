@@ -5,7 +5,7 @@ import com.github.fatihsokmen.codewars.search.UserModel.Companion.RECENT
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
-class UserHistoryDomainToModelMapper @Inject constructor() : Function<List<UserDomain>, List<UserModel>> {
+open class UserHistoryDomainToModelMapper @Inject constructor() : Function<List<UserDomain>, List<UserModel>> {
 
     override fun apply(userDomains: List<UserDomain>): List<UserModel> {
         val models = mutableListOf<UserModel>()

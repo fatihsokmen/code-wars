@@ -27,6 +27,11 @@ abstract class SearchFragmentModule {
     @FragmentViewScope
     abstract fun bindViewModelFactory(impl: SearchViewModel.Factory): ViewModelProvider.Factory
 
+    @Binds
+    @FragmentViewScope
+    abstract fun bindSearchRepository(impl: SearchRepository): ISearchRepository
+
+
     @Module
     companion object {
 

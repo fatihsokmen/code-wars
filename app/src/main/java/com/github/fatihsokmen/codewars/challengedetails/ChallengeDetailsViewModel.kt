@@ -1,5 +1,6 @@
 package com.github.fatihsokmen.codewars.challengedetails
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
@@ -9,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ChallengeDetailsViewModel constructor(
-        challengeId: String,
+        private val challengeId: String,
         private val challengeDetailsRepository: ChallengeDetailsRepository,
         private val scheduler: Scheduler
 ) : ViewModel() {
@@ -18,22 +19,26 @@ class ChallengeDetailsViewModel constructor(
         CompositeDisposable()
     }
 
-    var details = MutableLiveData<ChallengeDetailsResource<ChallengeDetailsDomain>>()
+    var details: MutableLiveData<ChallengeDetailsResource<ChallengeDetailsDomain>>? = null
 
-    init {
-        getChallengeDetails(challengeId)
+    fun details(): LiveData<ChallengeDetailsResource<ChallengeDetailsDomain>> {
+        if (details == null) {
+            details = MutableLiveData()
+            getChallengeDetails(challengeId)
+        }
+        return details as LiveData<ChallengeDetailsResource<ChallengeDetailsDomain>>
     }
 
     private fun getChallengeDetails(challengeId: String) {
-        details.value = ChallengeDetailsResource.loading()
+        details?.value = ChallengeDetailsResource.loading()
 
         subscriptions.add(challengeDetailsRepository.getChallengeDetails(challengeId)
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.main())
                 .subscribe({
-                    details.value = ChallengeDetailsResource.success(it)
+                    details?.value = ChallengeDetailsResource.success(it)
                 }, {
-                    details.value = ChallengeDetailsResource.error(it.message)
+                    details?.value = ChallengeDetailsResource.error(it.message)
                 }))
     }
 

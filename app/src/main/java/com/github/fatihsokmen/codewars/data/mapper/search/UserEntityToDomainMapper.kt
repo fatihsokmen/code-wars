@@ -5,7 +5,7 @@ import com.github.fatihsokmen.codewars.data.local.UserEntity
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
-class UserEntityToDomainMapper @Inject constructor() : Function<List<UserEntity>, List<UserDomain>> {
+open class UserEntityToDomainMapper @Inject constructor() : Function<List<UserEntity>, List<UserDomain>> {
 
     override fun apply(entities: List<UserEntity>): List<UserDomain> {
         val users = mutableListOf<UserDomain>()

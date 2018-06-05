@@ -5,7 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 
 @Database(entities = [UserEntity::class], version = SearchDatabase.VERSION, exportSchema = false)
-@TypeConverters(StringListTypeConverters::class, RanksTypeConverters::class, DateTypeConverter::class)
+@TypeConverters(StringListTypeConverter::class, RanksTypeConverter::class, DateTypeConverter::class)
 abstract class SearchDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

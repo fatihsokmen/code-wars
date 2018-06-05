@@ -3,7 +3,7 @@ package com.github.fatihsokmen.codewars.data.local
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 
-object StringListTypeConverters {
+object StringListTypeConverter {
 
     private val gson = Gson()
 

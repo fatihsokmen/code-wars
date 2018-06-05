@@ -5,7 +5,7 @@ import com.github.fatihsokmen.codewars.data.remote.search.UserDto
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
-class UserDtoToEntityMapper @Inject constructor() : Function<UserDto, UserEntity> {
+open class UserDtoToEntityMapper @Inject constructor() : Function<UserDto, UserEntity> {
 
     override fun apply(dto: UserDto): UserEntity =
             UserEntity(
